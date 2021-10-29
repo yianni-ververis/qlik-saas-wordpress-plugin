@@ -2,8 +2,7 @@
 	/*
 	Plugin Name: Qlik Saas
 	Plugin URI: https://github.com/yianni-ververis/qlik-saas-wordpress-plugin
-	Description: 
-		A plugin to connect to Qlik Saas tenant and get the objects. 
+	Description: A plugin to connect to Qlik Saas tenant and get the objects. 
 		- Unzip the plugin into your plugins directory
 		- Activate from the admin panel
 	Version: 1.0.1
