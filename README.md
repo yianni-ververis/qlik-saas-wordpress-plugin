@@ -5,13 +5,13 @@ Wordpress plugin for Qlik Saas
 
 ### Prepare Installation in Qlik Saas
 - Create a public / private key pair for signing JWTs <br>
-https://internal.qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#create-a-public--private-key-pair-for-signing-jwts
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#create-a-public--private-key-pair-for-signing-jwts
 - Configure JWT identity provider <br>
-https://internal.qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#configure-jwt-identity-provider
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#configure-jwt-identity-provider
 - Add the public key to the configuration <br>
-https://internal.qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#add-the-public-key-to-the-configuration
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#add-the-public-key-to-the-configuration
 - Input issuer <br>
-https://internal.qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issuer-and-key-id-values
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issuer-and-key-id-values
 
 <br>
 
@@ -20,12 +20,12 @@ https://internal.qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#i
  - Activate from Admin
  - Add `Host` of Qlik Saas as `<tenant>.<region>.qlikcloud.com`
  - Add your WebIntegrationID <br>
- https://internal.qlik.dev/tutorials/implement-jwt-authorization#configure-a-web-integration-id
+ https://qlik.dev/tutorials/implement-jwt-authorization#configure-a-web-integration-id
  - Add you AppID
  - Add your Private key from first step (Create a public / private key pair for signing JWTs) <br>
- https://internal.qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#create-a-public--private-key-pair-for-signing-jwts
+ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#create-a-public--private-key-pair-for-signing-jwts
  - Add the Key ID created from previous step <br>
- https://internal.qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issuer-and-key-id-values
+ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issuer-and-key-id-values
 
 <br>
 
