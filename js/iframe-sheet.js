@@ -29,7 +29,7 @@ const init = async () => {
     const iframe = document.createElement('iframe');
     iframe.src = `https://${settings.host}/single?appid=${settings.appID}&sheet=${settings.sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${identity}`;
     iframe.setAttribute('onload', `this.width=${settings.width};this.height=${settings.height};`);
-    const parentNode = document.querySelector('#qs_sheet');
+    const parentNode = document.querySelector(`#qs_sheet_${settings.appID}`);
     parentNode.appendChild(iframe);
   } catch (error) {
     console.error(error);

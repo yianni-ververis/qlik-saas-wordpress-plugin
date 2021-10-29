@@ -105,7 +105,7 @@
 		$settings['token'] = qlik_saas_jwt($tokenSettings);
 		wp_localize_script( 'qlik-saas-iframe-sheet-js', 'settings', $settings );
 
-		return "<div id=\"qs_sheet\"></div>";
+		return "<div id=\"qs_sheet_{$settings['appID']}\"></div>";
 	}
 	add_shortcode( 'qlik-saas-single-sheet', 'qlik_saas_single_sheet_func' );
 
