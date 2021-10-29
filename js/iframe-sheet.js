@@ -1,4 +1,3 @@
-console.log(settings)
 const checkStatus = async () => {
   const response = await fetch(`https://${settings.host}/api/v1/csrf-token`, {
     credentials: "include",
