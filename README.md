@@ -1,7 +1,11 @@
-# qlik-saas-wordpress-plugin
-Wordpress plugin for Qlik Saas
 
+<img src="assets/QlikLogo-RGB.png" alt="Qlik" width="200"/>
 <br>
+<br>
+
+# qlik-saas-wordpress-plugin
+Wordpress plugin for Qlik Saas tenant
+
 
 ### Prepare Installation in Qlik Saas
 - Create a public / private key pair for signing JWTs <br>

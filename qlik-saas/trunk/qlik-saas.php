@@ -5,7 +5,7 @@
 	Description: A plugin to connect to Qlik Saas tenant and get the objects. 
 		- Unzip the plugin into your plugins directory
 		- Activate from the admin panel
-	Version: 1.0.1
+	Version: 1.0.5
 	Author: yianni.ververis@qlik.com
 	License: MIT
 	Text Domain: qlik-saas

@@ -20,6 +20,26 @@ Before the plugin can be used, it must be configured as follows:
 1. On the left hand navigation panel, select "Qlik Saas". 
 1. Enter the relevant Qlik Saas server URL, WebIntegrationID, App ID, Private Key and KeyID to connect to your Qlik Saas tenant.
 
+== Prepare Installation in Qlik Saas ==
+- Create a public / private key pair for signing JWTs <br>
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#create-a-public--private-key-pair-for-signing-jwts
+- Configure JWT identity provider <br>
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#configure-jwt-identity-provider
+- Add the public key to the configuration <br>
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#add-the-public-key-to-the-configuration
+- Input issuer <br>
+https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issuer-and-key-id-values
+
+== Installation ==
+ - Add `Host` of Qlik Saas as `<tenant>.<region>.qlikcloud.com`
+ - Add your WebIntegrationID <br>
+ https://qlik.dev/tutorials/implement-jwt-authorization#configure-a-web-integration-id
+ - Add you AppID
+ - Add your Private key from first step (Create a public / private key pair for signing JWTs) <br>
+ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#create-a-public--private-key-pair-for-signing-jwts
+ - Add the Key ID created from previous step <br>
+ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issuer-and-key-id-values
+
 == How to Use ==
 
 The plugin utilizes a WordPress shortcode to insert Qlik Saas objects into a page. There are currently 1 shortcode available to insert Qlik Sense sheet.
@@ -57,5 +77,5 @@ It is strongly advised to install the plugin from the WordPress plugins manager 
 
 == Changelog ==
 
-= 1.0.1 =
+= 1.0.5 =
 * Init with iframing a sheet
