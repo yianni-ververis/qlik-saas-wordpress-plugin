@@ -20,8 +20,8 @@ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issu
 <br>
 
 ### Installation
- - Copy Files into `wp-content/plugins/qlik-saas` (until its officially released into the wp plugins directory)
- - Activate from Admin
+ - Search for plugin `qlik-saas` from the admin panel
+ - Install & Activate
  - Add `Host` of Qlik Saas as `<tenant>.<region>.qlikcloud.com`
  - Add your WebIntegrationID <br>
  https://qlik.dev/tutorials/implement-jwt-authorization#configure-a-web-integration-id
