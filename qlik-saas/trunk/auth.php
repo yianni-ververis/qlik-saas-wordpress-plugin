@@ -6,7 +6,11 @@
 	// Generatate the JWT token
 	function qlik_saas_jwt($settings) {
 		$jwt = null;
-		if (!empty($settings['host']) && !empty($settings['privateKey']) && !empty($settings['keyID']) ) {
+		if (
+			isset($settings['host']) && !empty($settings['host']) && 
+			isset($settings['privateKey']) && !empty($settings['privateKey']) && 
+			isset($settings['keyID']) && !empty($settings['keyID'])
+		) {
 
 			$issuedAt   = new DateTimeImmutable();
 			$expire     = $issuedAt->modify('+30 minutes')->getTimestamp();
@@ -33,7 +37,7 @@
 				$payload,
 				$settings['privateKey'],
 				'RS256',
-				$settings['keyID'],
+				$settings['keyID']
 			);
 		}
 		
