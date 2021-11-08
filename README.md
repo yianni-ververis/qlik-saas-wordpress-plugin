@@ -47,16 +47,44 @@ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issu
 <br>
 
 ### Usage
-  - iFrame an entire sheet by adding the shortcode into your page <br>
-  `[qlik-saas-single-sheet id="1ff88551-9c4d-41e0-b790-37f4c11d3df8" height="400" width="500"]`
+  - iFrame an entire sheet by adding the shortcode into your page
+    - `[qlik-saas-single-sheet id="1ff88551-9c4d-41e0-b790-37f4c11d3df8" height="400" width="500"]`
 
 <br>
 
-### Coming up
-  - Get Qlik Saas app objects with Nebula.js <br>
-  `[qlik-saas-obj id="xYzzR" height="400" width="500"]`
+![iFrame sheet shortcode](/assets/iframe-sheet-shortcodes.png)
+
+<br>
+
+![iFrame sheet preview](/assets/iframe-sheet-preview.png)
+
+<br>
+
+  - Add object by adding the object id or "selections" for the current selections toolbar, with a shortcode into your page
+    - `[qlik_saas_object id="selections" height="50"]`
+    - `[qlik_saas_object id="CSxZqS" height="400"]`
+
+<br>
+
+![iFrame sheet shortcode](/assets/iframe-sheet-shortcode.png)
+
+<br>
+
+![Mashup shortcodes](/assets/mashup-shortcodes.png)
+
+<br>
+
+![Mashup sheet 1](/assets/mashup-helpdesk-sheet1.png)
+
+<br>
+
+![Mashup sheet 2](/assets/mashup-helpdesk-sheet2.png)
+
+<br>
 
 ### Changelog
+  - 1.0.7
+    - Add object ids for mashups
   - 1.0.6
     - Support multiple shortcodes / sheet iframes in one page
   - 1.0.5

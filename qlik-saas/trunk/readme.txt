@@ -3,7 +3,7 @@ Contributors: yianniververis
 Tags: qlik, saas,
 Requires at least: 5.0
 Tested up to: 5.8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.7
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -46,7 +46,7 @@ The plugin utilizes a WordPress shortcode to insert Qlik Saas objects into a pag
 
 === Qlik Saas Sheet ===
 
-This shortcode allows you to embed a chart, table or other Qlik Sense object. The shortcode syntax is as follows:
+This shortcode allows you to iframe a sheet. The shortcode syntax is as follows:
 
 `[qlik-saas-single-sheet id="1ff88551-9c4d-41e0-b790-37f4c11d3df8" height="400" width="500"]`
 
@@ -55,29 +55,46 @@ Parameters are as follows:
 * height="": The height of the visualization in pixels.
 * appid="" (optional): The variable qs_appid is added to store the value from the custom field appid. The custom field is used to be able to use a separate app for each page rather than the apps defined in the plugin config.
 
+=== Qlik Saas Object ===
+
+This shortcode allows you to embed objects for mashup. The shortcode syntax is as follows:
+
+`[qlik_saas_object id="selections" height="50"]`
+`[qlik_saas_object id="CSxZqS" height="400"]`
+
+Parameters are as follows:
+* id="": Is the object id as found in the "dev-hub/single-configurator" or the Qlik Explorer for Developers. Add "selections" to get current selections toolbar
+* height="": The height of the visualization in pixels.
+
 == Installation ==
 
 It is strongly advised to install the plugin from the WordPress plugins manager to receive notifications of future updates. This can be done as follows:
 
 1. Login to your WordPress Admin Portal.
-1. On the left hand navigation panel, select "Plugins". 
-1. Towards the top of the plugins list, click the "Add New" button. 
-1. In the search box towards the right hand side, type "Qlik" and hit enter to search.
-1. The Qlik Saas plugin is currently one of only two results returned. Click the "Install Now" button next to it.
-1. WordPress will then download and install the plugin for you. Once complete, "Install Now" button will change to "Activate". Click the "Activate" button to complete the installation.
-1. The plugin is now installed and ready to Configure.
+2. On the left hand navigation panel, select "Plugins". 
+3. Towards the top of the plugins list, click the "Add New" button. 
+4. In the search box towards the right hand side, type "Qlik" and hit enter to search.
+5. The Qlik Saas plugin is currently one of only two results returned. Click the "Install Now" button next to it.
+6. WordPress will then download and install the plugin for you. Once complete, "Install Now" button will change to "Activate". Click the "Activate" button to complete the installation.
+7. The plugin is now installed and ready to Configure.
 
 == Frequently Asked Questions ==
 
 == Screenshots ==
 
-1. Activate plugin
-2. Settings Page - Server
-3. Add the shortcodes with the object ids to your post
+1. Admin Settings Page
+2. Shortcode with the sheet id
+3. Preview iframed sheet
+4. Shortcodes for mashup with object ids
+5. Helpdesk sheet 1 with object ids
+5. Helpdesk sheet 2 with object ids
 
 == Changelog ==
 
-= 1.0.5 =
+= 1.0.7 =
+* Add object ids for mashups
+
+= 1.0.6 =
 * Support multiple shortcodes / sheet iframes in one page
 
 = 1.0.5 =
