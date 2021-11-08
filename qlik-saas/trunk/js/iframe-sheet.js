@@ -26,11 +26,18 @@ const init = async () => {
   try {
     await checkStatus();
     const identity = `${Date.now().toString()}_ANON`;
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://${settings.host}/single?appid=${settings.appID}&sheet=${settings.sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${identity}`;
-    iframe.setAttribute('onload', `this.width=${settings.width};this.height=${settings.height};`);
-    const parentNode = document.querySelector(`#qs_sheet_${settings.appID}`);
-    parentNode.appendChild(iframe);
+    var sheets = document.querySelectorAll('[qlik-saas-sheet-id]');
+    // Loop over all selected elements
+    for (i = 0; i < sheets.length; ++i) {
+      const iframe = document.createElement('iframe');
+      const sheetID = sheets[i].getAttribute('qlik-saas-sheet-id');
+      const width = sheets[i].getAttribute('width');
+      const height = sheets[i].getAttribute('height');
+      iframe.src = `https://${settings.host}/single?appid=${settings.appID}&sheet=${sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${identity}`;
+      iframe.height = height;
+      iframe.width = width;
+      sheets[i].appendChild(iframe);
+    }
   } catch (error) {
     console.error(error);
   }

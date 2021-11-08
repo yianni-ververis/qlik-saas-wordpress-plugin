@@ -5,7 +5,7 @@
 	Description: A plugin to connect to Qlik Saas tenant and get the objects. 
 		- Unzip the plugin into your plugins directory
 		- Activate from the admin panel
-	Version: 1.0.5
+	Version: 1.0.6
 	Author: yianni.ververis@qlik.com
 	License: MIT
 	Text Domain: qlik-saas
@@ -15,7 +15,7 @@
 
 	defined('ABSPATH') or die("No script kiddies please!"); //Block direct access to this php file
 
-  define( 'QLIK_SAAS_PLUGIN_VERSION', '1.0.1' );
+  define( 'QLIK_SAAS_PLUGIN_VERSION', '1.0.6' );
   define( 'QLIK_SAAS_PLUGIN_MINIMUM_WP_VERSION', '5.1' );
 	define( 'QLIK_SAAS_PLUGIN_PLUGIN_DIR', plugin_dir_url( __FILE__ ) );
 	
@@ -79,23 +79,21 @@
 	add_action( 'wp_enqueue_scripts', 'qlik_saas_enqueued_assets', 20 );
 	function qlik_saas_enqueued_assets() {
 		if( ! wp_script_is( 'qlik-saas-iframe-sheet-js', 'enqueued' ) ) {
-      wp_register_script( 'qlik-saas-iframe-sheet-js', QLIK_SAAS_PLUGIN_PLUGIN_DIR . 'js/iframe-sheet.js', QLIK_SAAS_PLUGIN_VERSION, $in_footer = true );
+      wp_register_script( 'qlik-saas-iframe-sheet-js', QLIK_SAAS_PLUGIN_PLUGIN_DIR . 'js/iframe-sheet.js', QLIK_SAAS_PLUGIN_VERSION, $in_footer = false );
 		}
   }
 
 	// qlik-saas-single - Injects an iframe based on Qlik Saas Single API
-	// [qlik-saas-single-sheet id="1ff88551-9c4d-41e0-b790-37f4c11d3df8" height="400" width="500"]
+	// [qlik-saas-single-sheet id="1ff88551-9c4d-41e0-b790-37f4c11d3df8" height="600"]
+	// [qlik-saas-single-sheet id="kHgmg" height="600"]
 	function qlik_saas_single_sheet_func( $atts ) {
+		global $wp_scripts;
 		wp_enqueue_script( 'qlik-saas-iframe-sheet-js' );
-		
 		$settings = array(	
 			'version'						=> QLIK_SAAS_PLUGIN_VERSION,
 			'host'							=> esc_attr( get_option('qs_host') ),
 			'webIntegrationID'	=> esc_attr( get_option('qs_webintegrationid') ),
 			'appID'							=> esc_attr( get_option('qs_appid') ),	
-			'sheetID'						=> $atts['id'],			
-			'height'						=> $atts['height'],			
-			'width'							=> ($atts['width']) ? $atts['width'] : '100%',			
 		);
 		$tokenSettings = array(
 			'host'							=> esc_attr( get_option('qs_host') ),
@@ -103,9 +101,8 @@
 			'keyID'							=> esc_attr( get_option('qs_keyid') ),
 		);
 		$settings['token'] = qlik_saas_jwt($tokenSettings);
-		wp_localize_script( 'qlik-saas-iframe-sheet-js', 'settings', $settings );
-
-		return "<div id=\"qs_sheet_{$settings['appID']}\"></div>";
+			wp_localize_script( 'qlik-saas-iframe-sheet-js', 'settings', $settings );
+		return "<div qlik-saas-sheet-id=\"{$atts['id']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: block;\"></div>";
 	}
 	add_shortcode( 'qlik-saas-single-sheet', 'qlik_saas_single_sheet_func' );
 
