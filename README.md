@@ -20,8 +20,17 @@ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issu
 <br>
 
 ### Installation
- - Search for plugin `qlik-saas` from the admin panel
- - Install & Activate
+
+  1. Login to your WordPress Admin Portal.
+  1. On the left hand navigation panel, select "Plugins". 
+  1. Towards the top of the plugins list, click the "Add New" button. 
+  1. In the search box towards the right hand side, type "Qlik" and hit enter to search.
+  1. The Qlik Saas plugin is currently one of only two results returned. Click the "Install Now" button next to it.
+  1. WordPress will then download and install the plugin for you. Once complete, "Install Now" button will change to "Activate". Click the "Activate" button to complete the installation.
+
+  
+### Configuration
+
  - Add `Host` of Qlik Saas as `<tenant>.<region>.qlikcloud.com`
  - Add your WebIntegrationID <br>
  https://qlik.dev/tutorials/implement-jwt-authorization#configure-a-web-integration-id
@@ -46,3 +55,9 @@ https://qlik.dev/tutorials/create-signed-tokens-for-jwt-authorization#input-issu
 ### Coming up
   - Get Qlik Saas app objects with Nebula.js <br>
   `[qlik-saas-obj id="xYzzR" height="400" width="500"]`
+
+### Changelog
+  - 1.0.6
+    - Support multiple shortcodes / sheet iframes in one page
+  - 1.0.5
+    - Init with iframing a sheet
