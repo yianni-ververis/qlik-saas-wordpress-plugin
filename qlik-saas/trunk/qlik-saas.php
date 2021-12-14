@@ -15,8 +15,8 @@
 
 	defined('ABSPATH') or die("No script kiddies please!"); //Block direct access to this php file
 
-  define( 'QLIK_SAAS_PLUGIN_VERSION', '1.0.7' );
-  define( 'QLIK_SAAS_PLUGIN_MINIMUM_WP_VERSION', '5.1' );
+  	define( 'QLIK_SAAS_PLUGIN_VERSION', '1.0.7' );
+    define( 'QLIK_SAAS_PLUGIN_MINIMUM_WP_VERSION', '5.1' );
 	define( 'QLIK_SAAS_PLUGIN_PLUGIN_DIR', plugin_dir_url( __FILE__ ) );
 	
 	add_action('admin_menu', 'qlik_saas_plugin_menu');
@@ -120,12 +120,12 @@
 		$settings = array(	
 			'version'						=> QLIK_SAAS_PLUGIN_VERSION,
 			'host'							=> esc_attr( get_option('qs_host') ),
-			'webIntegrationID'	=> esc_attr( get_option('qs_webintegrationid') ),
+			'webIntegrationID'				=> esc_attr( get_option('qs_webintegrationid') ),
 			'appID'							=> esc_attr( get_option('qs_appid') ),	
 		);
 		$tokenSettings = array(
 			'host'							=> esc_attr( get_option('qs_host') ),
-			'privateKey'				=> esc_attr( get_option('qs_privateKey') ),		
+			'privateKey'					=> esc_attr( get_option('qs_privateKey') ),		
 			'keyID'							=> esc_attr( get_option('qs_keyid') ),
 		);
 		$settings['token'] = qlik_saas_jwt($tokenSettings);
@@ -142,17 +142,17 @@
 		$settings = array(	
 			'version'						=> QLIK_SAAS_PLUGIN_VERSION,
 			'host'							=> esc_attr( get_option('qs_host') ),
-			'webIntegrationID'	=> esc_attr( get_option('qs_webintegrationid') ),
-			'appID'							=> esc_attr( get_option('qs_appid') ),	
+			'webIntegrationID'				=> esc_attr( get_option('qs_webintegrationid') ),
+			'appID'							=> !empty(get_option('qs_appid')) ? esc_attr( get_option('qs_appid') ) : '',
 		);
 		$tokenSettings = array(
 			'host'							=> esc_attr( get_option('qs_host') ),
-			'privateKey'				=> esc_attr( get_option('qs_privateKey') ),		
+			'privateKey'					=> esc_attr( get_option('qs_privateKey') ),		
 			'keyID'							=> esc_attr( get_option('qs_keyid') ),
 		);
 		$settings['token'] = qlik_saas_jwt($tokenSettings);
 		wp_localize_script( 'qlik-saas-iframe-sheet-js', 'settings', $settings );
-		return "<div qlik-saas-sheet-id=\"{$atts['id']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: block;\"></div>";
+		return "<div qlik-saas-sheet-id=\"{$atts['id']}\" app-id=\"{$atts['appid']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: block;\"></div>";
 	}
 	add_shortcode( 'qlik-saas-single-sheet', 'qlik_saas_single_sheet_func' );
 
