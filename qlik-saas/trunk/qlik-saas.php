@@ -81,7 +81,7 @@
 		wp_register_script( 'qlik-saas-iframe-sheet-js', QLIK_SAAS_PLUGIN_PLUGIN_DIR . 'js/iframe-sheet.js', QLIK_SAAS_PLUGIN_VERSION, $in_footer = true );
 		wp_register_script( 'qlik-saas-nebula', QLIK_SAAS_PLUGIN_PLUGIN_DIR . 'js/nebula.js', QLIK_SAAS_PLUGIN_VERSION, $in_footer = true );
 		wp_register_script( 'qlik-saas-enigma', 'https://unpkg.com/enigma.js@2.7.2/enigma.min.js', null, null, $in_footer = false );
-		wp_register_script( 'qlik-saas-stardust', 'https://unpkg.com/@nebula.js/stardust@1.1.1', null, null, $in_footer = false );
+		wp_register_script( 'qlik-saas-stardust', 'https://unpkg.com/@nebula.js/stardust', null, null, $in_footer = false );
 		wp_register_script( 'qlik-saas-snBarchart', 'https://unpkg.com/@nebula.js/sn-bar-chart', null, null, $in_footer = false );
 		wp_register_script( 'qlik-saas-snLinechart', 'https://unpkg.com/@nebula.js/sn-line-chart', null, null, $in_footer = false );
 		wp_register_script( 'qlik-saas-snSankeychart', 'https://unpkg.com/@nebula.js/sn-sankey-chart', null, null, $in_footer = false );
@@ -96,6 +96,15 @@
 		wp_register_script( 'qlik-saas-snDistributionplot', 'https://unpkg.com/@nebula.js/sn-distributionplot', null, null, $in_footer = false );
 		wp_register_script( 'qlik-saas-snPiechart', 'https://unpkg.com/@nebula.js/sn-pie-chart', null, null, $in_footer = false );
   }
+
+	function qs_register_csrf_variable(){ 
+	?>
+		<script type="text/javascript">
+			var qs_csrf = false;
+		</script>
+	<?php
+	}
+	add_action ( 'wp_head', 'qs_register_csrf_variable' );
 
 	// qlik-saas-object - Injects Nebula objects
 	// [qlik_saas_object id="CSxZqS" height="200"]
@@ -116,12 +125,11 @@
 		wp_enqueue_script( 'qlik-saas-snCombochart' );
 		wp_enqueue_script( 'qlik-saas-snDistributionplot' );
 		wp_enqueue_script( 'qlik-saas-snPiechart' );
-
 		$settings = array(	
 			'version'						=> QLIK_SAAS_PLUGIN_VERSION,
 			'host'							=> esc_attr( get_option('qs_host') ),
 			'webIntegrationID'				=> esc_attr( get_option('qs_webintegrationid') ),
-			'appID'							=> esc_attr( get_option('qs_appid') ),	
+			'appID'							=> !empty(get_option('qs_appid')) ? esc_attr( get_option('qs_appid') ) : '',
 		);
 		$tokenSettings = array(
 			'host'							=> esc_attr( get_option('qs_host') ),
@@ -130,7 +138,7 @@
 		);
 		$settings['token'] = qlik_saas_jwt($tokenSettings);
 		wp_localize_script( 'qlik-saas-nebula', 'settings', $settings );
-		return "<div qlik-saas-object-id=\"{$atts['id']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: inline-block; position: relative; width: 100%; height: {$atts['height']}px;\"></div>";
+		return "<div qlik-saas-object-id=\"{$atts['id']}\" app-id=\"{$atts['appid']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: inline-block; position: relative; width: 100%; height: {$atts['height']}px;\"></div>";
 	}
 	add_shortcode( 'qlik_saas_object', 'qlik_saas_object_func' );
 

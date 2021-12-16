@@ -20,11 +20,14 @@ const connect = async () => {
     },
     rejectUnauthorized: false,
   });
+  qs_csrf = true;
 };
 
 const init = async () => {
   try {
-    await checkStatus();
+    if(!qs_csrf) {
+      await checkStatus();
+    }
     const identity = `${Date.now().toString()}_ANON`;
     var sheets = document.querySelectorAll('[qlik-saas-sheet-id]');
     // Loop over all selected elements
