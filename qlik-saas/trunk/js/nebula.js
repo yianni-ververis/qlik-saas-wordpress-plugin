@@ -1,3 +1,4 @@
+console.log('new no anoonnnnn');
 const login = async () => {
     await fetch(`https://${settings.host}/login/jwt-session?qlik-web-integration-id=${settings.webIntegrationID}`, {
       method: 'POST',
@@ -36,7 +37,7 @@ const initNebula = async () => {
       const theAppId = settings.appID !== '' ? settings.appID : objects[i].getAttribute('app-id');
 
       //neb
-      const url = `wss://${settings.host}/app/${theAppId}?qlik-web-integration-id=${settings.webIntegrationID}&qlik-csrf-token=${csrfToken}`;
+      const url = `wss://${settings.host}/app/${theAppId}/identity/${qs_identity}?qlik-web-integration-id=${settings.webIntegrationID}&qlik-csrf-token=${csrfToken}`;
       const schema = await ( await fetch("https://unpkg.com/enigma.js/schemas/3.2.json") ).json();
       const session = window.enigma.create({ schema, url });
       const app = await (await session.open()).openDoc(theAppId);

@@ -17,15 +17,15 @@
 	
 			$payload = [
 					'iss'  						=> $settings['host'],									// Issuer
-					"aud"							=> 'qlik.api/login/jwt-session',
+					"aud"						=> 'qlik.api/login/jwt-session',
 					'iat'  						=> $issuedAt->getTimestamp(),					// Issued at: time when the token was generated
 					'nbf'  						=> $issuedAt->getTimestamp(),					// This is the time that the token can actually be used
-					'exp'							=> $expire,
-					'sub'							=> 'anon-view-sub',
+					'exp'						=> $expire,
+					'sub'						=> 'anon-view-sub',
 					'subType'					=> 'user',
 					'name'						=> 'Anon Viewer',
 					'email'						=> 'anon-viewer@qlik.com',
-					'email_verified'	=> true,
+					'email_verified'			=> true,
 					'groups'					=> ['anon-view'],
 			];
 			

@@ -28,7 +28,6 @@ const init = async () => {
     if(!qs_csrf) {
       await checkStatus();
     }
-    const identity = `${Date.now().toString()}_ANON`;
     var sheets = document.querySelectorAll('[qlik-saas-sheet-id]');
     // Loop over all selected elements
     for (i = 0; i < sheets.length; ++i) {
@@ -37,7 +36,7 @@ const init = async () => {
       const theAppId = settings.appID !== '' ? settings.appID : sheets[i].getAttribute('app-id');
       const width = sheets[i].getAttribute('width');
       const height = sheets[i].getAttribute('height');
-      iframe.src = `https://${settings.host}/single?appid=${theAppId}&sheet=${sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${identity}`;
+      iframe.src = `https://${settings.host}/single?appid=${theAppId}&sheet=${sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${qs_identity}`;
       iframe.height = height;
       iframe.width = width;
       sheets[i].appendChild(iframe);

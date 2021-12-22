@@ -101,6 +101,7 @@
 	?>
 		<script type="text/javascript">
 			var qs_csrf = false;
+			var qs_identity = `${Date.now().toString()}_ANON`;
 		</script>
 	<?php
 	}
