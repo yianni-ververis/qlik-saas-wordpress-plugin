@@ -1,4 +1,3 @@
-console.log('new no anoonnnnn');
 const login = async () => {
     await fetch(`https://${settings.host}/login/jwt-session?qlik-web-integration-id=${settings.webIntegrationID}`, {
       method: 'POST',
@@ -12,7 +11,7 @@ const login = async () => {
       rejectUnauthorized: false,
     });
     qs_csrf = true;
-  };
+};
   
 const getCsrfTokenInfo = async () => {
   const response = await fetch(`https://${settings.host}/api/v1/csrf-token`, {

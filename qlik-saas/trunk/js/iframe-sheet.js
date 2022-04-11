@@ -36,7 +36,7 @@ const init = async () => {
       const theAppId = settings.appID !== '' ? settings.appID : sheets[i].getAttribute('app-id');
       const width = sheets[i].getAttribute('width');
       const height = sheets[i].getAttribute('height');
-      iframe.src = `https://${settings.host}/single?appid=${theAppId}&sheet=${sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${qs_identity}`;
+      iframe.src = `https://${settings.host}/single/?appid=${theAppId}&sheet=${sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${qs_identity}`;
       iframe.height = height;
       iframe.width = width;
       sheets[i].appendChild(iframe);
