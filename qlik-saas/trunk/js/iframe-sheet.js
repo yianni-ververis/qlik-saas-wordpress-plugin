@@ -1,48 +1,60 @@
-const checkStatus = async () => {
-  const response = await fetch(`https://${settings.host}/api/v1/csrf-token`, {
-    credentials: "include",
-    headers: { "qlik-web-integration-id": settings.webIntegrationID },
-  });
-  if (response.status === 401) {
-    await connect();
-  }
+async function isLoggedIn() {
+  console.log('Check if logged in');
+  return await fetch(`https://${settings.host}/api/v1/users/me`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+          'Content-Type': 'application/json',
+          'qlik-web-integration-id': settings.webIntegrationID,
+      },
+  })
 }
 
-const connect = async () => {
-  await fetch(`https://${settings.host}/login/jwt-session?qlik-web-integration-id=${settings.webIntegrationID}`, {
-    method: 'POST',
-    credentials: 'include',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${settings.token}`,
-      'Qlik-Web-Integration-ID':settings.webIntegrationID,
-    },
-    rejectUnauthorized: false,
-  });
-  qs_csrf = true;
+async function login_sheet() {
+  console.log('Logging in ...');
+  var authHeader = `Bearer ${settings.token}`;
+  return await fetch(`https://${settings.host}/login/jwt-session?qlik-web-integration-id=${settings.webIntegrationID}`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+      withCredentials: true,
+      headers: {
+          'Authorization': authHeader,
+          'qlik-web-integration-id': settings.webIntegrationID,
+          'Content-Type': 'application/json'
+      },
+  })
 };
+
+
 
 const init = async () => {
   try {
-    if(!qs_csrf) {
-      await checkStatus();
+    const loggedIn = await isLoggedIn();
+    if (loggedIn.status != 200) {
+      var loginRes = await login_sheet();
+      if (loginRes.status != 200) {
+        console.log('Something went wrong while logging in.')
+      } 
     }
-    var sheets = document.querySelectorAll('[qlik-saas-sheet-id]');
-    // Loop over all selected elements
-    for (i = 0; i < sheets.length; ++i) {
-      const iframe = document.createElement('iframe');
-      const sheetID = sheets[i].getAttribute('qlik-saas-sheet-id');
-      const theAppId = settings.appID !== '' ? settings.appID : sheets[i].getAttribute('app-id');
-      const width = sheets[i].getAttribute('width');
-      const height = sheets[i].getAttribute('height');
-      iframe.src = `https://${settings.host}/single/?appid=${theAppId}&sheet=${sheetID}&opt=currsel&qlik-web-integration-id=${settings.webIntegrationID}&identity=${qs_identity}`;
-      iframe.height = height;
-      iframe.width = width;
-      sheets[i].appendChild(iframe);
-    }
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+      throw new Error(err)
+  }
+
+  console.log('Render Sheets...');
+  var sheets = document.querySelectorAll('[qlik-saas-sheet-id]');
+  // Loop over all selected elements
+  for (i = 0; i < sheets.length; ++i) {
+    const iframe = document.createElement('iframe');
+    const sheetID = sheets[i].getAttribute('qlik-saas-sheet-id');
+    const theAppId = sheets[i].getAttribute('app-id') !== '' ? sheets[i].getAttribute('app-id') : settings.appID;
+    const width = sheets[i].getAttribute('width');
+    const height = sheets[i].getAttribute('height');
+    iframe.src = `https://${settings.host}/single/?appid=${theAppId}&sheet=${sheetID}&opt=ctxmenu&identity=${qs_identity}`;
+    iframe.height = height;
+    iframe.width = width;
+    sheets[i].appendChild(iframe);
   }
 };
 
