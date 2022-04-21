@@ -14,17 +14,20 @@
 
 			$issuedAt   = new DateTimeImmutable();
 			$expire     = $issuedAt->modify('+30 minutes')->getTimestamp();
-	
+
+			$uuid = wp_generate_uuid4();
+
 			$payload = [
-					'iss'  						=> $settings['host'],									// Issuer
+					'iss'  						=> $settings['host'],
 					"aud"						=> 'qlik.api/login/jwt-session',
-					'iat'  						=> $issuedAt->getTimestamp(),					// Issued at: time when the token was generated
-					'nbf'  						=> $issuedAt->getTimestamp(),					// This is the time that the token can actually be used
+					'iat'  						=> $issuedAt->getTimestamp(),
+					'nbf'  						=> $issuedAt->getTimestamp(),
+					'jti'						=> $uuid,
 					'exp'						=> $expire,
-					'sub'						=> 'anon-view-sub',
+					'sub'						=> $uuid,
 					'subType'					=> 'user',
-					'name'						=> 'Anon Viewer',
-					'email'						=> 'anon-viewer@qlik.com',
+					'name'						=> 'Anon_' . $uuid,
+					'email'						=> $uuid . '@anonymoususer.anon',
 					'email_verified'			=> true,
 					'groups'					=> ['anon-view'],
 			];

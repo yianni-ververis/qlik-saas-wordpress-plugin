@@ -146,6 +146,7 @@
 	// qlik-saas-single - Injects an iframe based on Qlik Saas Single API
 	// [qlik-saas-single-sheet id="kHgmg" height="600"]
 	function qlik_saas_single_sheet_func( $atts ) {
+		
 		global $wp_scripts;
 		wp_enqueue_script( 'qlik-saas-iframe-sheet-js' );
 		$settings = array(	
@@ -160,7 +161,7 @@
 			'keyID'							=> esc_attr( get_option('qs_keyid') ),
 		);
 		$settings['token'] = qlik_saas_jwt($tokenSettings);
-		wp_localize_script( 'qlik-saas-iframe-sheet-js', 'settings', $settings );
+		wp_localize_script( 'qlik-saas-iframe-sheet-js', 'qs_settings', $settings );
 		return "<div qlik-saas-sheet-id=\"{$atts['id']}\" app-id=\"{$atts['appid']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: block;\"></div>";
 	}
 	add_shortcode( 'qlik-saas-single-sheet', 'qlik_saas_single_sheet_func' );

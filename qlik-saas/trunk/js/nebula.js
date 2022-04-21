@@ -8,7 +8,7 @@ async function isLoggedIn_nebula() {
           'Content-Type': 'application/json',
           'qlik-web-integration-id': settings.webIntegrationID,
       },
-  })
+  });
 }
 
 async function login_nebula() {
@@ -24,7 +24,8 @@ async function login_nebula() {
           'qlik-web-integration-id': settings.webIntegrationID,
           'Content-Type': 'application/json'
       },
-  })
+      rejectunAuthorized: false,
+  });
 };
 
 const getCsrfTokenInfo = async () => {
@@ -42,7 +43,12 @@ const initNebula = async () => {
       var loginRes = await login_nebula();
       if (loginRes.status != 200) {
         console.log('Something went wrong while logging in.')
-      } 
+      } else {
+        const loggedIn = await isLoggedIn();
+        if (loggedIn.status != 200) {
+          console.log('Third-party cookie blocking is preventing this site from loading. Try another browser or adjust your browser settings.')
+        }
+      }
     }
   } catch (err) {
       throw new Error(err)
@@ -58,7 +64,7 @@ const initNebula = async () => {
     const id = objects[i].getAttribute('qlik-saas-object-id')
     const theAppId = settings.appID !== '' ? settings.appID : objects[i].getAttribute('app-id');
 
-    const url = `wss://${settings.host}/app/${theAppId}/identity/${qs_identity}?qlik-web-integration-id=${settings.webIntegrationID}&qlik-csrf-token=${csrfToken}`;
+    const url = `wss://${settings.host}/app/${theAppId}/identity/${qs_identity}/?qlik-web-integration-id=${settings.webIntegrationID}&qlik-csrf-token=${csrfToken}`;
     const schema = await ( await fetch("https://unpkg.com/enigma.js/schemas/3.2.json") ).json();
     const session = window.enigma.create({ schema, url });
     const app = await (await session.open()).openDoc(theAppId);
