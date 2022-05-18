@@ -5,7 +5,7 @@
 	Description: A plugin to connect to Qlik Saas tenant and get the objects. 
 		- Unzip the plugin into your plugins directory
 		- Activate from the admin panel
-	Version: 1.0.7
+	Version: 1.10.0
 	Author: yianni.ververis@qlik.com
 	License: MIT
 	Text Domain: qlik-saas
@@ -15,7 +15,7 @@
 
 	defined('ABSPATH') or die("No script kiddies please!"); //Block direct access to this php file
 
-  	define( 'QLIK_SAAS_PLUGIN_VERSION', '1.0.7' );
+  	define( 'QLIK_SAAS_PLUGIN_VERSION', '1.10.0' );
     define( 'QLIK_SAAS_PLUGIN_MINIMUM_WP_VERSION', '5.1' );
 	define( 'QLIK_SAAS_PLUGIN_PLUGIN_DIR', plugin_dir_url( __FILE__ ) );
 	
@@ -107,6 +107,7 @@
 	}
 	add_action ( 'wp_head', 'qs_register_csrf_variable' );
 
+
 	// qlik-saas-object - Injects Nebula objects
 	// [qlik_saas_object id="CSxZqS" height="200"]
 	function qlik_saas_object_func( $atts ) {
@@ -132,12 +133,7 @@
 			'webIntegrationID'				=> esc_attr( get_option('qs_webintegrationid') ),
 			'appID'							=> !empty(get_option('qs_appid')) ? esc_attr( get_option('qs_appid') ) : '',
 		);
-		$tokenSettings = array(
-			'host'							=> esc_attr( get_option('qs_host') ),
-			'privateKey'					=> esc_attr( get_option('qs_privateKey') ),		
-			'keyID'							=> esc_attr( get_option('qs_keyid') ),
-		);
-		$settings['token'] = qlik_saas_jwt($tokenSettings);
+
 		wp_localize_script( 'qlik-saas-nebula', 'settings', $settings );
 		return "<div qlik-saas-object-id=\"{$atts['id']}\" app-id=\"{$atts['appid']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: inline-block; position: relative; width: 100%; height: {$atts['height']}px;\"></div>";
 	}
@@ -155,12 +151,7 @@
 			'webIntegrationID'				=> esc_attr( get_option('qs_webintegrationid') ),
 			'appID'							=> !empty(get_option('qs_appid')) ? esc_attr( get_option('qs_appid') ) : '',
 		);
-		$tokenSettings = array(
-			'host'							=> esc_attr( get_option('qs_host') ),
-			'privateKey'					=> esc_attr( get_option('qs_privateKey') ),		
-			'keyID'							=> esc_attr( get_option('qs_keyid') ),
-		);
-		$settings['token'] = qlik_saas_jwt($tokenSettings);
+
 		wp_localize_script( 'qlik-saas-iframe-sheet-js', 'qs_settings', $settings );
 		return "<div qlik-saas-sheet-id=\"{$atts['id']}\" app-id=\"{$atts['appid']}\" width=\"100%\" height=\"{$atts['height']}\" style=\"display: block;\"></div>";
 	}

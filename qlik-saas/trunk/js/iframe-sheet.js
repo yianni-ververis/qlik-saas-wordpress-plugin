@@ -1,5 +1,5 @@
 async function isLoggedIn() {
-  console.log('Check if logged in');
+  console.log('Check if logged in...');
   return await fetch(`https://${qs_settings.host}/api/v1/users/me`, {
       method: 'GET',
       mode: 'cors',
@@ -11,9 +11,20 @@ async function isLoggedIn() {
   });
 }
 
-async function login_sheet() {
+
+async function getJWT() {
+  return await fetch('/wp-json/qs/v1/token', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+};
+
+async function login_sheet(jwt) {
   console.log('Logging in ...');
-  var authHeader = `Bearer ${qs_settings.token}`;
+  var authHeader = `Bearer ${jwt}`;
   return await fetch(`https://${qs_settings.host}/login/jwt-session?qlik-web-integration-id=${qs_settings.webIntegrationID}`, {
       method: 'POST',
       mode: 'cors',
@@ -32,16 +43,24 @@ async function login_sheet() {
 
 const init = async () => {
   try {
-    const loggedIn = await isLoggedIn();
-    if (loggedIn.status != 200) {
-      var loginRes = await login_sheet();
-      if (loginRes.status != 200) {
-        console.log('Something went wrong while logging in.')
+    const loggedIn = await isLoggedIn();  
+    if(loggedIn.status != 200) {
+      console.log('Not logged in...');
+      const tokenRes = await getJWT();
+        if (tokenRes.status == 200) {
+          const respJson = await tokenRes.json();
+          var loginRes = await login_sheet(respJson);
+          if (loginRes.status != 200) {
+              console.log('Something went wrong while logging in.')
+          } else {
+              const loggedIn = await isLoggedIn();
+              if (loggedIn.status != 200) {
+                  console.log('Third-party cookie blocking is preventing this site from loading. Try another browser or adjust your browser settings.')
+              }
+          }
       } else {
-        const loggedIn = await isLoggedIn();
-        if (loggedIn.status != 200) {
-          console.log('Third-party cookie blocking is preventing this site from loading. Try another browser or adjust your browser settings.')
-        }
+        const error =  await tokenRes.json();
+          console.log('Something went wrong: ', error.message);
       }
     }
   } catch (err) {

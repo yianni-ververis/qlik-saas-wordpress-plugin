@@ -1,5 +1,5 @@
 async function isLoggedIn_nebula() {
-  console.log('Check if logged in - nebula');
+  console.log('Check if logged in - nebula...');
   return await fetch(`https://${settings.host}/api/v1/users/me`, {
       method: 'GET',
       mode: 'cors',
@@ -11,9 +11,20 @@ async function isLoggedIn_nebula() {
   });
 }
 
-async function login_nebula() {
-  console.log('Logging in - nebula');
-  var authHeader = `Bearer ${settings.token}`;
+async function getJWT_nebula() {
+  return await fetch('/wp-json/qs/v1/token', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+};
+
+
+async function login_nebula(jwt) {
+  console.log('Logging in - nebula...');
+  var authHeader = `Bearer ${jwt}`;
   return await fetch(`https://${settings.host}/login/jwt-session?qlik-web-integration-id=${settings.webIntegrationID}`, {
       method: 'POST',
       mode: 'cors',
@@ -38,21 +49,30 @@ const getCsrfTokenInfo = async () => {
 
 const initNebula = async () => {
   try {
-    const loggedIn = await isLoggedIn_nebula();
-    if (loggedIn.status != 200) {
-      var loginRes = await login_nebula();
-      if (loginRes.status != 200) {
-        console.log('Something went wrong while logging in.')
+    const loggedIn = await isLoggedIn_nebula();  
+    if(loggedIn.status != 200) {
+      console.log('Not logged in...');
+      const tokenRes = await getJWT_nebula();
+        if (tokenRes.status == 200) {
+          const respJson = await tokenRes.json();
+          var loginRes = await login_nebula(respJson);
+          if (loginRes.status != 200) {
+              console.log('Something went wrong while logging in.')
+          } else {
+              const loggedIn = await isLoggedIn_nebula();
+              if (loggedIn.status != 200) {
+                  console.log('Third-party cookie blocking is preventing this site from loading. Try another browser or adjust your browser settings.')
+              }
+          }
       } else {
-        const loggedIn = await isLoggedIn();
-        if (loggedIn.status != 200) {
-          console.log('Third-party cookie blocking is preventing this site from loading. Try another browser or adjust your browser settings.')
-        }
+        const error =  await tokenRes.json();
+          console.log('Something went wrong: ', error.message);
       }
     }
   } catch (err) {
       throw new Error(err)
   }
+
 
   const csrfToken = await getCsrfTokenInfo();
   var objects = document.querySelectorAll('[qlik-saas-object-id]');
