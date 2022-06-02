@@ -65,6 +65,7 @@ This shortcode allows you to embed objects for mashup. The shortcode syntax is a
 Parameters are as follows:
 * id="": Is the object id as found in the "dev-hub/single-configurator" or the Qlik Explorer for Developers. Add "selections" to get current selections toolbar
 * height="": The height of the visualization in pixels.
+* appid="" (optional)
 
 == Installation ==
 
